@@ -1,11 +1,14 @@
 __program__ = "SieveAI"
+__description__ = "An automated drug discovery pipeline"
 __version__ = '0.5'
-__subversion__ = "20230829"
-__author__ = "[Vishal Kumar Sahu](vishalkumarsahu.in)"
+__subversion__ = "20230830"
+__author__ = "Vishal Kumar Sahu"
+__url__ = "https://github.com/VishalKumarSahu/SieveAI"
+__email__ = "mail@vishalkumarsahu.in"
 
 from .exe import Vina
 from .process import Docking
 from .cli import dock, rescore
 from .lib import ChimeraX, MolConverter, OpenBabel
 
-all = ["__program__", "__version__", "__subversion__", "__author__"]
+__all__ = ["__program__", "__description__", "__version__", "__subversion__", "__author__", "__url__", "__email__"]

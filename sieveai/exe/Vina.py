@@ -51,7 +51,7 @@ class Vina(VinaBase):
         continue
 
       if self.utility.check_path(f"{self.path_receptor_pdbqt}{OS.sep}{_rec_name}qt"):
-        self.utility.log_warning("Receptor already prepared. Delete the prepared receptor file. @TODO Force or selective override yet to be implemented.")
+        self.utility.log_warning("Receptor already prepared. Delete the prepared receptor file.")
         continue
 
       # Clean PDB
@@ -69,7 +69,6 @@ class Vina(VinaBase):
 
       command = f"""prepare_receptor -r "{self.path_receptor_clean}{OS.sep}{_rec_name}" -o "{self.path_receptor_pdbqt}{OS.sep}{_rec_name}qt" -A 'bonds_hydrogens' -U 'waters' -v -d "{self.path_receptor_summary}{OS.sep}{_rec_name}.summary.log" """
 
-      # @TODO: Process Using CommandManager
       s = OS.popen(command)
       output = s.read()
       self.utility.log_info(output)

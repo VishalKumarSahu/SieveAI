@@ -18,10 +18,6 @@ class ChimeraX(OpenBabel):
     [setattr(self, _k, kwargs[_k]) for _k in kwargs.keys()]
 
   def __parse_hbond_line(self, line):
-    """
-    @BUG: HBonds parsing from ChimeraX results needs to recheck
-    @TODO: Handle case when hydrogen is not available in the atomic model
-    """
     result = None
     if "#" in line:
       pass

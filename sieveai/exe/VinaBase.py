@@ -365,7 +365,6 @@ class VinaBase(ExecutableBase):
         if self.utility.check_path(f"{self.path_analysis}{OS.sep}{_complex_name}--{_last_conformer}.{self.ext__hbonds}"):
           self.utility.log_info(f"{_complex_name}--{_last_conformer} is already processed by ChimeraX.")
           continue
-        # @TODO: Multiprocess
         self.chimerax_run_file(_cxc_file)
       else:
         self.utility.log_info(f"File {_cxc_file} not found. Continuing...")
@@ -514,10 +513,8 @@ class VinaBase(ExecutableBase):
     if self.path_docking is None and self.dir_docking:
       self.path_docking = self.utility.validate_dir(f"{self.path_base}/{self.dir_docking}")
 
-    # @TODO: Filter rec for skipped list
     _rec_pdbqt_path_list = self.utility.find_files(self.path_receptor_pdbqt, '.pdbqt')
 
-    # @TODO: Filter lig for skipped list
     _lig_pdbqt_path_list = self.utility.find_files(self.path_ligand_pdbqt, '.pdbqt')
 
     _complexes = self.utility.product([_rec_pdbqt_path_list, _lig_pdbqt_path_list]) # combination
