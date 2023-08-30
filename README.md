@@ -12,3 +12,6 @@ An automated drug discovery pipeline
 
 ## 0.1.20210630
 * Version 0.1
+
+# Copyright
+&copy; Vishal Kumar Sahu, 2023
