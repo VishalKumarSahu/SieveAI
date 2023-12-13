@@ -57,6 +57,7 @@ class VinaBase(ExecutableBase):
         "skipped_receptor": [],
         "skipped_ligand": [],
         "file__result_score": "result.score.csv",
+        "file__result_score_excel": "Docking-Results.xlsx",
         "file__config": "sieveai.cfg",
         "vina_config_keys": ["flex", # "receptor", "ligand",
               "center_x", "center_y", "center_z",
@@ -328,9 +329,11 @@ class VinaBase(ExecutableBase):
         # self.chimera_files.append(f"open {_cxc_file};")
 
     _score_file_path = f"{self.path_base}{OS.sep}{self.file__result_score}"
+    _score_file_path_xl = f"{self.path_base}{OS.sep}{self.file__result_score_excel}"
     if _result_matrix and not self.utility.check_path(_score_file_path):
       _f2 = PD.DataFrame(_result_matrix)
       _f2.to_csv(_score_file_path, index=False)
+      self.utility.pd_excel(_score_file_path_xl, _f2, 'vina_score')
       self.utility.log_info(f"AutoDock result score table updated to {_score_file_path}.")
     else:
       self.utility.log_warning("No score file was saved .")
@@ -375,6 +378,7 @@ class VinaBase(ExecutableBase):
     self.utility.time_start()
     self.utility.log_info("Starting processing ChimeraX results.")
     _results_score_file = f"{self.path_base}{OS.sep}{self.file__result_score}"
+    _results_score_file_xl = f"{self.path_base}{OS.sep}{self.file__result_score_excel}"
 
     if not self.utility.check_path(_results_score_file):
       self.utility.log_warning(f"Score file {_results_score_file} does not exist for processing chimerax results. Skipping...")
@@ -423,6 +427,33 @@ class VinaBase(ExecutableBase):
 
     _f2 = PD.DataFrame(_result_matrix)
     _f2.to_csv(_results_score_file, index=False)
+    self.utility.pd_excel(_results_score_file_xl, _f2, 'Vina Score, HBonds and Contacts')
+
+    # Ranking the complexes and writing their Ranks
+    _score_columns = _results.columns
+    _attributes = ['contacts_count', 'hbonds_count', 'conformer_score']
+    # _attributes = ['contacts_count', 'conformer_score']
+    _columns = ['receptor', 'ligand']
+
+    for _col in _attributes:
+        _results[_col] = self.utility.PD.to_numeric(_results[_col], errors='coerce')
+        _results[_col] = _results[_col].fillna(_results[_col].mean())
+
+    _rank_cols = []
+    for _col in _columns:
+        for _attr in _attributes:
+            _rcol = f"rank__{_col}__{_attr}"
+            _rank_cols.append(_rcol)
+            _results[_rcol] = _results.groupby(_col)[_attr].rank(ascending=False)
+
+    _results['ranking_score'] = _results[_rank_cols].sum(axis='columns')
+    _results['complex_id'] = _results[["receptor", "ligand"]].astype(str).apply("--".join, axis='columns')
+    _results['complex_uid'] = _results[["receptor", "ligand", 'conformer_id']].astype(str).apply("--".join, axis='columns')
+    _top_complexes = _results.sort_values('ranking', ascending=True).groupby('complex_id').head(1).reset_index(drop=True)
+
+    self.utility.pd_excel(_results_score_file_xl, _results, 'Raw Ranks All Complexes')
+    self.utility.pd_excel(_results_score_file_xl, _top_complexes[_score_columns], 'Top Ranked Complexes')
+
     self.utility.log_info(f"Processed ChimeraX results and updated to {_results_score_file}.")
 
   def cleanup_files(self, *args, **kwargs):
@@ -464,18 +495,6 @@ class VinaBase(ExecutableBase):
       self.utility.log_info(f"{len(_dock_files)} files in {self.path_docking_log_tgz} to be compressed.")
       self.utility.add_tgz_files(self.path_docking_log_tgz, _dock_files)
 
-    if self.utility.check_path(self.path_docking_log_tgz):
-      self.utility.read_tgz_file(self.path_docking_log_tgz)
-      _arch_dock_files = self.utility.tgz_files
-      for _l in self.utility.ProgressBar(_dock_files):
-        _fname = self.utility.file_name(_l, with_ext=True)
-        if _fname in _arch_dock_files:
-          # Delete the log files only
-          self.utility.delete_path(_l)
-
-      # ToDo: Update using Project Manager
-    else:
-      self.utility.log_error(f"{self.path_docking_log_tgz} file is not present.")
 
   def analyse_docking(self, *args, **kwargs):
     # return # to by pass
@@ -513,8 +532,10 @@ class VinaBase(ExecutableBase):
     if self.path_docking is None and self.dir_docking:
       self.path_docking = self.utility.validate_dir(f"{self.path_base}/{self.dir_docking}")
 
+    # @TODO: Filter rec for skipped list
     _rec_pdbqt_path_list = self.utility.find_files(self.path_receptor_pdbqt, '.pdbqt')
 
+    # @TODO: Filter lig for skipped list
     _lig_pdbqt_path_list = self.utility.find_files(self.path_ligand_pdbqt, '.pdbqt')
 
     _complexes = self.utility.product([_rec_pdbqt_path_list, _lig_pdbqt_path_list]) # combination

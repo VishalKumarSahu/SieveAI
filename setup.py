@@ -1,8 +1,7 @@
 from setuptools import setup, find_packages
 from sieveai import *
 
-REQUIREMENTS = [i.strip() for i in open("sieveai.requirements.txt").readlines()]
-
+REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
 LONG_DESCRIPTION = "".join(open("README.md").readlines())
 
 setup(
@@ -14,6 +13,7 @@ setup(
   author_email=__email__,
   url=__url__,
   install_requires=REQUIREMENTS,
+  setup_requires=REQUIREMENTS,
   entry_points={
     'console_scripts': ['sieveai=sieveai:dock', 'sieveai-rescore=sieveai:rescore'],
   },

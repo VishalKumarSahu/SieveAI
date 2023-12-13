@@ -1,5 +1,4 @@
 UtilityLib
-beautifulsoup4
 biopython
 imageio
 lxml
@@ -7,10 +6,8 @@ numpy
 pandas
 pdb-tools
 Pillow
-playsound
 psutil
 PyAutoGUI
-python-pptx
 python3-xlib
 requests
 seaborn
