@@ -451,7 +451,7 @@ class VinaBase(ExecutableBase):
     _results['ranking_score'] = _results[_rank_cols].sum(axis='columns')
     _results['complex_id'] = _results[["receptor", "ligand"]].astype(str).apply("--".join, axis='columns')
     _results['complex_uid'] = _results[["receptor", "ligand", 'conformer_id']].astype(str).apply("--".join, axis='columns')
-    _top_complexes = _results.sort_values('ranking', ascending=True).groupby('complex_id').head(1).reset_index(drop=True)
+    _top_complexes = _results.sort_values('ranking_score', ascending=True).groupby('complex_id').head(1).reset_index(drop=True)
 
     self.utility.pd_excel(_results_score_file_xl, _results, 'Raw Ranks All Complexes')
     self.utility.pd_excel(_results_score_file_xl, _top_complexes[_score_columns], 'Top Ranked Complexes')
