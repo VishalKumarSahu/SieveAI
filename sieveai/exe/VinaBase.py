@@ -430,6 +430,8 @@ class VinaBase(ExecutableBase):
     self.utility.pd_excel(_results_score_file_xl, _f2, 'Vina Score, HBonds and Contacts')
 
     # Ranking the complexes and writing their Ranks
+
+    _results = _f2.copy()
     _score_columns = _results.columns
     _attributes = ['contacts_count', 'hbonds_count', 'conformer_score']
     # _attributes = ['contacts_count', 'conformer_score']

@@ -1,7 +1,7 @@
 __program__ = "SieveAI"
 __description__ = "An automated drug discovery pipeline"
 __version__ = '0.5'
-__subversion__ = "2023090513"
+__subversion__ = "20231213"
 __author__ = "Vishal Kumar Sahu"
 __url__ = "https://github.com/VishalKumarSahu/SieveAI"
 __email__ = "mail@vishalkumarsahu.in"
