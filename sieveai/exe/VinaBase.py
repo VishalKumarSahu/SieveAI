@@ -94,6 +94,12 @@ class VinaBase(ExecutableBase):
 
     _vina_config_settings.update(kwargs)
 
+    __vina_config_file_location = f"{_vina_config_settings.get('destination')}{OS.sep}{_vina_config_settings.get('config_file')}"
+
+    if self.utility.exists(__vina_config_file_location):
+      self.utility.log_warning(f"{len(__vina_config_file_location)} config file already exist. Delete this to recalculate and regenerate.")
+      return
+
     _receptor_path = _vina_config_settings.get("receptor")
     parser = PDBParser(get_header=False)
     __structure = parser.get_structure("PDB", _receptor_path)
@@ -186,7 +192,6 @@ class VinaBase(ExecutableBase):
 
     __vina_allowed_config = {key: _vina_config_settings[key] for key in _vina_config_settings if key in self.vina_config_keys}
     __vina_config_lines = [f"{config_key} = {__vina_allowed_config[config_key]}" for config_key in __vina_allowed_config.keys() if __vina_allowed_config[config_key] is not None]
-    __vina_config_file_location = f"{_vina_config_settings.get('destination')}{OS.sep}{_vina_config_settings.get('config_file')}"
 
     if _vina_config_settings.get('config_file'):
       self.utility.write(__vina_config_file_location, __vina_config_lines)
