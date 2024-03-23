@@ -1,10 +1,10 @@
 def process_args():
   import os as OS
-  from sieveai import __program__, __version__, __subversion__
+  from sieveai import __program__, __build__
   from UtilityLib import CommandUtility
 
   # key: (['arg_k1', 'arg_k2'], nargs, default, help, {})
-  _version_info = f"{__program__} v{__version__}.{__subversion__}"
+  _version_info = f"{__program__} (build-{__build__})"
   _cli_settings = {
     "debug": (['--debug'], None, 0, 'silent/verbose/debug mode from 0, 1, 2, and 3.', {}),
     "db_path": (['-db'], None, None, 'Provide path to the database for Sieve project.', {}),

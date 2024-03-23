@@ -1,0 +1,45 @@
+[build-system]
+  requires = ["setuptools>=68.0"]
+  build-backend = "setuptools.build_meta"
+
+[project]
+  name = "SieveAI"
+  description = "SieveAI: An Automated Drug Discovery Pipeline"
+  version = "0.7.1"
+  authors = [
+    { name="Vishal Kumar Sahu", email="mail@vishalkumarsahu.in" },
+  ]
+  readme = "README.md"
+  requires-python = ">=3.8"
+  classifiers = [
+    'Operating System :: OS Independent',
+    'Intended Audience :: Science/Research',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10'
+  ]
+  dependencies = [
+    'UtilityLib',
+    'biopython',
+    'imageio',
+    'lxml',
+    'numpy',
+    'pandas',
+    'pdb-tools',
+    'Pillow',
+    'psutil',
+    'PyAutoGUI',
+    'python3-xlib',
+    'requests',
+    'seaborn',
+    'SQLAlchemy',
+    'tqdm',
+  ]
+
+[project.scripts]
+  sieveai = "sieveai:dock"
+  rescore = "sieveai:rescore"
+
+[project.urls]
+  Homepage = "https://github.com/TheBiomics/SieveAI"
+  Issues = "https://github.com/TheBiomics/SieveAI/issues"

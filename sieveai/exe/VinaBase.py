@@ -97,7 +97,7 @@ class VinaBase(ExecutableBase):
     __vina_config_file_location = f"{_vina_config_settings.get('destination')}{OS.sep}{_vina_config_settings.get('config_file')}"
 
     if self.utility.exists(__vina_config_file_location):
-      self.utility.log_warning(f"{len(__vina_config_file_location)} config file already exist. Delete this to recalculate and regenerate.")
+      self.utility.log_warning(f"{__vina_config_file_location} config file already exist. Delete this to recalculate and regenerate.")
       return
 
     _receptor_path = _vina_config_settings.get("receptor")
