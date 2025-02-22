@@ -53,13 +53,3 @@ class Manager(ConfigManager):
       self.log_info('Continue with default configuration or do you want to modify the configuration?')
       self.SYS.exit('This is normal behavior. Rerun after checking the configuration.')
     self.handle_process()
-
-  # Manage web operation
-  def web_dock(self, *args, **kwargs):
-    self.handle_process(**kwargs)
-
-  def web_server(self, *args, **kwargs):
-    from .web import SieveAIAPI
-    _wm = SieveAIAPI(*args, **kwargs)
-    _wm.run_server()
-    return _wm

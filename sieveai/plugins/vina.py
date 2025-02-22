@@ -476,15 +476,14 @@ class Vina(PluginDockingBase):
     _cmd_contacts = _CX.get_cmd_contacts()
     _cmd_hbonds = _CX.get_cmd_hbonds()
 
-    for _, _row in self._df_top_ranked.iterrows():
-    self.write(_cx_html_path, _cx_html_data)
-    self.write(_cx_cxc_path, _cx_cxc_data)
+    # self.write(_cx_html_path, _cx_html_data)
+    # self.write(_cx_cxc_path, _cx_cxc_data)
 
     # """Run on ChimeraX silently"""
-    _CX.exe_cxc_file(_cx_cxc_path.resolve())
+    # _CX.exe_cxc_file(_cx_cxc_path.resolve())
 
     # """Open in ChimeraX"""
-    self.OS.system(f'chimerax --cmd "open {_cx_html_path}" &')
+    # self.OS.system(f'chimerax --cmd "open {_cx_html_path}" &')
 
   def _finalise_results(self, *args, **kwargs):
     self.TASKS.start_step('Finalise_Results', 'FINAL_STEP', self.plugin_uid)
