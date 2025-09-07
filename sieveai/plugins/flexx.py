@@ -18,6 +18,7 @@ class FlexX(PluginDockingBase):
 
   def __init__(self, *args, **kwargs):
     super().__init__(**kwargs)
+    self.SETTINGS.user.path_base = self.path_base
 
   def setup(self, *args, **kwargs):
     self.update_attributes(self, kwargs)

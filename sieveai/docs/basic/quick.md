@@ -8,6 +8,7 @@
 - Step 2: Install ChimeraX
   - Ubuntu: Download .deb file and install using `sudo apt-get install ./ucsf-chimerax_<VERSION>.deb`
   - Windows: Download .exe file and install normally
+  - MacOS: Download .dmg file and install normally following instructions
 - Step 3: Add ChimeraX installation bin directory to PATH/Path environmental variables.
 - Step 4: Confirm ChimeraX availble through commandline chimerax
 
@@ -21,7 +22,14 @@
     - Step 2: Download `vina_1.2.3_windows_x86_64.exe` (for windows)
     - Step 3: Rename downloaded file to `vina` and move it to `C:\Program Files\AutoDockVINA`.
     - Step 4: Add directory to environmental variables. [see help](https://stackoverflow.com/a/9546345)
+  * MacOS Silicon Chips
+    - Download vina compatible with Mac
+    - Move the file to `/usr/src/bin/vina`
+    - Make it executable `chmod +x /usr/src/bin/vina`
+    - Override gatekeeper security `sudo xattr -rd com.apple.quarantine /usr/local/bin/vina`
+    - Make CLI available to global users `sudo ln -s /Applications/ChimeraX-1.10.app/Contents/MacOS/ChimeraX /usr/local/bin/chimerax`
   * Step 5: Test `vina` command output in terminal.
+
 
 ## AutoDock Tools/MGL Tools (version ~1.5.7)
   - Step 1: Download [ADFR Suit for Linux/Windows](https://ccsb.scripps.edu/adfr/downloads/) and install as per given instructions

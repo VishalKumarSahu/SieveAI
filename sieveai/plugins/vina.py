@@ -65,7 +65,7 @@ class Vina(PluginDockingBase):
 
     if True: # Compare hash of file changes and reattach selectively
       self.Receptors = Structures(self.SETTINGS.user.path_receptors, ['protein', 'dna', 'rna'])
-      self.Ligands = Structures(self.SETTINGS.user.path_ligands, 'compound', 'protein', 'rna')
+      self.Ligands = Structures(self.SETTINGS.user.path_ligands, ['compound', 'protein', 'rna'])
       self.log_debug('Storing Molecules')
 
     self.TASKS.end_step('init_molecules', self.plugin_uid, self.plugin_uid)
@@ -149,7 +149,7 @@ class Vina(PluginDockingBase):
             "cwd": _cuid_c.path_docking.resolve(),
             # ">": _cuid_c.path_score.resolve() # from command line to file
           }
-    _result = self.cmd_run(self.path_vina_exe, **_config)
+    _result = self.cmd_run(str(self.path_vina_exe), **_config)
     _cuid_c.path_score.write_text(_result)
     self.TASKS.end_step('run_cli_docking', cuid, self.plugin_uid)
 
@@ -562,11 +562,11 @@ class Vina(PluginDockingBase):
   def _start_preparation(self, *args, **kwargs):
     # Setting molecular formats
     self.TASKS.start_step('start_preparation', self.plugin_uid, self.plugin_uid)
-    _mgltools = self.SETTINGS.PLUGIN_REFS.MGLTools() # CIR
-    self.Receptors.set_format('pdbqt', converter=_mgltools.prepare_receptor)
+    _mgltools = self.SETTINGS.PLUGIN_REFS.MGLTools()
+    self.Receptors.set_format('pdbqt', converter=_mgltools.convert_pqbqt) # convert_pqbqt, prepare_receptor
 
     _openBabel = self.SETTINGS.PLUGIN_REFS.OpenBabel()
-    self.Ligands.set_format('pdbqt', converter=_openBabel.convert)
+    self.Ligands.set_format('pdbqt', converter=_mgltools.convert_pqbqt) # _openBabel.convert
 
     self._queue_complexes()
 

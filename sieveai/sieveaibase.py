@@ -106,7 +106,7 @@ class SieveAIBase(ProjectManager):
       for _cl in _classes:
         _plugins[_cl] = _file
 
-    self.SETTINGS.PLUGIN_REFS.update(PluginManager.get_plugin_refs(self, _plugins))
+    self.SETTINGS.PLUGIN_REFS.update(PluginManager.get_plugin_refs(_plugins))
 
   def _first_check(self):
     _self_config_toml =  self.path_sieveai_master_config / 'sieveai.config.toml'

@@ -1,7 +1,7 @@
 from .__metadata__ import __version__, __description__, __build__, __name__
+from .managers import Manager
 
 def dock():
-  from .managers import Manager
   _m = Manager()
   _m.cli_dock()
 

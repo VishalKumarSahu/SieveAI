@@ -123,3 +123,10 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+
+.DS_Store
+*.pem
+*.sqlite3
+*.log
+*.env

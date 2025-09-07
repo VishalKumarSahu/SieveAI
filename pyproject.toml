@@ -5,18 +5,18 @@
 [project]
   name = "SieveAI"
   description = "SieveAI: An Automated Drug Discovery Pipeline"
-  version = "0.8.dev"
+  version = "0.8.dev2"
   authors = [
     { name="Vishal Kumar Sahu", email="mail@vishalkumarsahu.in" },
   ]
   readme = "README.md"
   license = {file = "LICENSE"}
-  requires-python = ">=3.8, <3.12"
+  requires-python = ">=3.8, <3.11"
   classifiers = [
     'Operating System :: OS Independent',
     'Intended Audience :: Science/Research',
+    'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.10',
-    'Programming Language :: Python :: 3.11',
   ]
   dependencies = [
     'toml',
@@ -30,7 +30,10 @@
     'Pillow',
     'requests',
     'seaborn',
-    'vmd-python',
+    # conda install -c conda-forge vmd-python
+    # 'vmd-python',
+    # conda install -c conda-forge numpy swig boost-cpp libboost sphinx sphinx_rtd_theme
+    # 'vina',
     'streamlit',
   ]
 

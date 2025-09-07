@@ -27,7 +27,12 @@ class Master(PluginBase):
           "current_assignment": _wf_step
         }
 
-        _tmp_plg_ref = self.SETTINGS.PLUGIN_REFS[_plugin_uid](**_plugin_args)
+        _tmp_plg_ref = self.SETTINGS.PLUGIN_REFS[_plugin_uid]
+        if _tmp_plg_ref is None or not callable(_tmp_plg_ref):
+          self.log_error(f"MASTER_00: Plugin {_plugin_uid} not found for Workflow Step {_wf_step.upper()}!")
+          continue
+
+        _tmp_plg_ref = _tmp_plg_ref(**_plugin_args)
 
         self.log_debug(f"MASTER_01: Adding Plugin Dependency {_wf_step.upper()}:{_plugin_uid}...")
 
