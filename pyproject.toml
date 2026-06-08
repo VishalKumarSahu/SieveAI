@@ -1,46 +1,51 @@
 [build-system]
-  requires = ["setuptools>=68.0"]
-  build-backend = "setuptools.build_meta"
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
-  name = "SieveAI"
-  description = "SieveAI: An Automated Drug Discovery Pipeline"
-  version = "2.0.8"
-  authors = [
+name = "SieveAI"
+description = "Automated Drug Discovery Pipeline - Production Ready"
+version = "1.0.0.dev1"
+authors = [
     { name="Vishal Kumar Sahu", email="mail@vishalkumarsahu.in" },
-  ]
-  readme = "README.md"
-  license = {file = "LICENSE"}
-  requires-python = ">=3.8, <3.11"
-  classifiers = [
-    'Operating System :: OS Independent',
-    'Intended Audience :: Science/Research',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.10',
-  ]
-  dependencies = [
-    'toml',
-    'UtilityLib',
-    'biopython',
-    'imageio',
-    'lxml',
-    'numpy',
-    'meeko',
-    'rdkit-pypi',
-    'Pillow',
-    'requests',
-    'seaborn',
-    # conda install -c conda-forge vmd-python
-    # 'vmd-python',
-    # conda install -c conda-forge numpy swig boost-cpp libboost sphinx sphinx_rtd_theme
-    # 'vina',
-    'streamlit',
-  ]
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+classifiers = [
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "toml",
+    "tomli-w",
+    "pyyaml",
+    "typer[all]",
+    "rich",
+    "pandas",
+    "numpy",
+    "biopython",
+    "rdkit-pypi",
+    "UtilityLib",
+]
+
+[project.optional-dependencies]
+hpc = [
+    "dask[distributed]",
+]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "black",
+    "ruff",
+]
 
 [project.scripts]
-  sieveai = "sieveai:dock"
-  sieveai_server = "sieveai:server"
+sieveai = "sieveai.cli.main:app"
 
 [project.urls]
-  Homepage = "https://github.com/TheBiomics/SieveAI"
-  Issues = "https://github.com/TheBiomics/SieveAI/issues"
+Homepage = "https://github.com/TheBiomics/SieveAI"
+Issues = "https://github.com/TheBiomics/SieveAI/issues"

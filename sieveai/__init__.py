@@ -1,11 +1,5 @@
-from .__metadata__ import __version__, __description__, __build__, __name__
-from .managers import Manager
+"""SieveAI v1.0 - Automated Drug Discovery Pipeline"""
 
-def dock():
-  _m = Manager()
-  _m.cli_dock()
-
-def server():
-  import subprocess, os, sys
-  _entrypoint = os.path.join(os.path.dirname(os.path.abspath(__file__)), "gui", "web.py")
-  subprocess.run([sys.executable, "-m", "streamlit", "run", _entrypoint])
+__version__ = "1.0.0.dev1"
+__author__ = "Vishal Kumar Sahu"
+__email__ = "mail@vishalkumarsahu.in"

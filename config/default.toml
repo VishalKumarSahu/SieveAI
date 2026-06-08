@@ -1,0 +1,39 @@
+# SieveAI configuration
+
+[environment]
+type = "local"
+
+[paths]
+receptors_dir = "receptors"
+ligands_dir = "ligands"
+docking_dir = "docking"
+analysis_dir = "analysis"
+results_dir = "results"
+
+[workflow]
+order = ["structuresync", "vina", "chimerax", "results"]
+
+[parallel]
+backend = "local"
+max_workers = 4
+chunk_size = 10
+
+[plugins.vina]
+enabled = true
+exhaustiveness = 16
+num_modes = 10
+cpu = "auto"
+
+[plugins.chimerax]
+enabled = true
+
+[logging]
+level = "info"
+
+[checkpoint]
+enabled = true
+file = "sieveai.checkpoint.sqlite"
+
+[timeouts]
+task_timeout = 3600
+max_retries = 3

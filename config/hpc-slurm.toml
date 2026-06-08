@@ -1,0 +1,41 @@
+# SieveAI - SLURM HPC configuration
+
+[environment]
+type = "hpc-slurm"
+
+[paths]
+receptors_dir = "receptors"
+ligands_dir = "ligands"
+docking_dir = "docking"
+analysis_dir = "analysis"
+results_dir = "results"
+
+[workflow]
+order = ["structuresync", "vina", "chimerax", "results"]
+
+[parallel]
+backend = "slurm"
+chunk_size = 10
+
+[parallel.slurm]
+array_size = 1000
+concurrent = 50
+cpus_per_task = 4
+mem = "8G"
+time = "24:00:00"
+
+[plugins.vina]
+enabled = true
+exhaustiveness = 16
+num_modes = 10
+
+[plugins.chimerax]
+enabled = true
+
+[logging]
+level = "info"
+file = "sieveai.log"
+
+[checkpoint]
+enabled = true
+file = "sieveai.checkpoint.sqlite"
